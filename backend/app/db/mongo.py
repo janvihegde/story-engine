@@ -1,32 +1,35 @@
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
+from pathlib import Path
+import certifi
 
-# 1. Load environment variables from the .env file
-load_dotenv()
+# Path Setup
+current_file_path = Path(__file__).resolve()
+project_root = current_file_path.parents[3]
+env_path = project_root / ".env"
+load_dotenv(dotenv_path=env_path)
 
-# 2. Get the URI safely. If missing, default to localhost (for safety)
 MONGO_URI = os.getenv("MONGO_URI")
 
-print("🔌 Connecting to MongoDB...")
-
 try:
-    if not MONGO_URI:
-        raise ValueError("No MONGO_URI found in .env file")
-
-    client = MongoClient(MONGO_URI)
-    db = client["story_map"]
-    events_collection = db["start"]
-
-    # Simple ping check
-    client.admin.command('ping')
-    print("✅ MongoDB Connected Successfully!")
-
+    client = MongoClient(MONGO_URI, tlsCAFile=certifi.where())
+    db = client["storydb"]
+    events_collection = db["nodes"]
+    print("✅ Connected to MongoDB!")
 except Exception as e:
     print(f"❌ Connection Error: {e}")
     events_collection = None
 
-def get_all_events():
+def get_events(genre=None):
+    """
+    Fetches events. If 'genre' is provided, it filters by that genre.
+    """
     if events_collection is not None:
-        return list(events_collection.find({}, {'_id': 0}))
+        query = {}
+        if genre:
+            # Filter: Look for events where 'genre' matches the requested one
+            query["genre"] = genre.lower()
+            
+        return list(events_collection.find(query, {'_id': 0}))
     return []
