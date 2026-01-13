@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import './App.css';
 
+<header className="header">
+  <h1>📖 The Story Engine</h1>
+  <p className="subtitle">"Where paths diverge in yellow woods..."</p>
+</header>
+
+
 function App() {
   const [step, setStep] = useState(1); // 1=Genre, 2=StartSelect, 3=InteractivePlay
   const [genre, setGenre] = useState('horror');
