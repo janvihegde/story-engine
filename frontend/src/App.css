@@ -1,0 +1,187 @@
+:root {
+  --bg-color: #f1f5f9;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --card-bg: #ffffff;
+  --accent-blue: #2563eb;
+  --accent-blue-hover: #1d4ed8;
+  --border-color: #cbd5e1;
+  --error-bg: #fee2e2;
+  --error-text: #b91c1c;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+/* --- Header --- */
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin: 0 0 10px 0;
+  color: #0f172a;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* --- Controls Box --- */
+.controls {
+  background: var(--card-bg);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+select, button {
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  background: white;
+  cursor: pointer;
+}
+
+select:focus {
+  outline: 2px solid var(--accent-blue);
+  border-color: transparent;
+}
+
+button.btn-generate {
+  background-color: var(--accent-blue);
+  color: white;
+  border: none;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+button.btn-generate:hover {
+  background-color: var(--accent-blue-hover);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- Error Message --- */
+.error-box {
+  background-color: var(--error-bg);
+  color: var(--error-text);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 5px solid var(--error-text);
+}
+
+/* --- Story Cards --- */
+.story-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.story-card {
+  background: var(--card-bg);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-left: 6px solid #ccc; /* Default border */
+  animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* Genre-specific Colors */
+.story-card.horror { border-left-color: #9333ea; /* Purple */ }
+.story-card.thriller { border-left-color: #2563eb; /* Blue */ }
+.story-card.comedy { border-left-color: #eab308; /* Yellow */ }
+
+.meta {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.card-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-top: 40px;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.grid-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+.story-card.option {
+  cursor: pointer;
+  border-left: 6px solid #2563eb;
+  transition: transform 0.2s, background 0.2s;
+}
+.story-card.option:hover {
+  transform: translateY(-5px);
+  background: #f8fafc;
+}
+.btn-select {
+  margin-top: 10px;
+  width: 100%;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+}
+.btn-back {
+  background: transparent;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
+.story-card.history {
+  opacity: 0.6;
+  border-left-color: #cbd5e1;
+}
+
+.story-card.active-card {
+  border-left: 6px solid #2563eb;
+  background-color: #f8fafc;
+  transform: scale(1.02);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
